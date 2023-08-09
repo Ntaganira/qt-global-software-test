@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="Heritier" content="QT Exam" />
+    <meta name="generator" content="Hugo 0.84.0" />
+    <title>Index</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template -->
+    <link href="dist/css/custom.css" rel="stylesheet" />
+    <!-- Datepicker  -->
+    <link href="dist/css/google-ui.css" rel="stylesheet" />
+    <link href="dist/css/sweetalert.css" rel="stylesheet" />
+    <link href="dist/css/dataTables.jqueryui.min.css" rel="stylesheet" />
+    <link href="dist/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="dist/css/responsive.dataTables.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container col-lg-6">
+      <h4>Registration Form</h4>
+      <div class="row">
+        <div class="col-lg-12">
+          Nane:
+          <input
+            type="text"
+            id="title"
+            placeholder="Task name"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-lg-6">
+          Fist Name
+          <input type="text" id="ff" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+          Last Name
+          <input type="text" id="endDate" class="form-control" />
+        </div>
+
+        <div class="col-lg-12">
+          <h4>Gender</h4>
+          <select class="gender form-control">
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+          </select>
+        </div>
+
+        <div class="col-lg-6">
+          Username
+          <input type="text" id="ff" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+          password
+          <input type="text" id="endDate" class="form-control" />
+        </div>
+
+        <div class="col-lg-12">
+          <h4>Description</h4>
+          <h6 id="descriptiont">d</h6>
+          <textarea
+            placeholder="Add more detail to this task"
+            class="form-control"
+            id="description"
+            cols="4"
+            rows="3"
+          ></textarea>
+        </div>
+        <br />
+        <div class="col-lg-">
+          <h4>Priority</h4>
+          <span class="low">
+            <input type="radio" id="priority1" name="priority" value="30" />
+            <label for="priority1">Low</label>
+          </span>
+          <span class="normal">
+            <input type="radio" id="priority2" name="priority" value="60" />
+            <label for="priority2">Normal</label>
+          </span>
+          <span class="high">
+            <input type="radio" id="priority3" name="priority" value="100" />
+            <label for="priority3">High</label>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Large modal -->
+
+    <!-- bootstrap v5 -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"
+      defer
+    ></script>
+    <!-- Date Picker  -->
+    <script src="dist/js/jquery.min.js"></script>
+    <script src="dist/js/google-date-ui.js"></script>
+    <!-- Sweet alert -->
+    <script src="dist/js/sweetalert.mini.js"></script>
+    <script src="dist/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="dist/js/dataTables.jqueryui.min.js"></script> -->
+    <script src="dist/js/custom.js"></script>
+  </body>
+</html>

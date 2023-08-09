@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
         return userRepo.findByUsername(username);
     }
 
+    @Override
+    public boolean isExistsById(long id) {
+        return userRepo.existsById(id);
+    }
+
 }

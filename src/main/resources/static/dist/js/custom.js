@@ -109,6 +109,18 @@ $(document).ready(function () {
       });
     }
 
+
+    $("#description").keyup(function(e){
+      
+      if($(this).val().length > 99)
+        $(this).css("background-color", "#FFE4C4");
+
+      if($(this).val().length <= 99)
+        $(this).css("background-color", "#54C571");
+      
+        $("#descriptiont").text($(this).val().length);
+    });
+
     $('.submit').on("click",function(e){
       e.preventDefault();
       let title = $("#title").val();
@@ -123,14 +135,22 @@ $(document).ready(function () {
       let projects = [];
       projects = $('.project').val();
 
+      let prior;
+      if(priority1>0 )
+        prior = priority1;
+
+      if(priority2>0)
+        prior = priority2;
+
+      if(priority3>0)
+        prior = priority3;
+
       let task = {
         title: title,
         startDate:startDate,
         endDate:endDate,
         description: description,
-        priority1:priority1,
-        priority2:priority2,
-        priority3: priority3,
+        priority:prior,
         assignees:assignees,
         projects:projects
       };

@@ -20,6 +20,11 @@ import rw.qt.service.impl.UserService;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping(value = "/register")
+    public String login() {
+        return "UI/register";
+    }
+
     @GetMapping(value = "/all-users", produces = { "application/json" })
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.OK);

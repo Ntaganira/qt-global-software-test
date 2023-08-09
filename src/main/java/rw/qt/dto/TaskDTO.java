@@ -17,6 +17,6 @@ public class TaskDTO {
     private String status;
     private String priority;
     private String description;
-    private List<Long> assignees;
-    private List<Long> projects;
+    private String assignees;
+    private String projects;
 }
