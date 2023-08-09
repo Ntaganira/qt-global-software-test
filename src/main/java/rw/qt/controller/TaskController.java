@@ -29,6 +29,11 @@ public class TaskController {
     @Autowired
     private ProjectService projectService;
 
+    @GetMapping(value = "/index", produces = { "application/json" })
+    public String index() {
+        return "UI/index";
+    }
+
     @GetMapping(value = "/all-projects", produces = { "application/json" })
     public ResponseEntity<?> getAllProjects() {
         return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
