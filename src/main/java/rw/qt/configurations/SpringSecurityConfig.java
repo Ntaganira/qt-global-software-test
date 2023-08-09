@@ -28,22 +28,19 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/**", "/dist/**").permitAll()
+                .requestMatchers("/dist/**").permitAll()
                 .anyRequest()
                 .authenticated());
-        // .httpBasic();
 
-        // http
-        // .authorizeRequests().anyRequest().authenticated().and()
-        // .formLogin()
-        // .loginPage("/login").permitAll()
-        // .defaultSuccessUrl("/", true)
-        // .failureUrl("/login-page?error=true")
-        // .usernameParameter("username")
-        // .passwordParameter("password")
-        // .and()
-        // .logout()
-        // .permitAll();
+        http.formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/index", true)
+                .failureUrl("/login?error=true")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and()
+                .logout()
+                .permitAll();
         return http.build();
     }
 

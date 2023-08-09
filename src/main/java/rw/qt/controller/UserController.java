@@ -21,8 +21,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "/register")
-    public String login() {
+    public String registration() {
         return "UI/register";
+    }
+
+    @GetMapping(value = "/login")
+    public String login() {
+        return "UI/login";
     }
 
     @GetMapping(value = "/all-users", produces = { "application/json" })
@@ -33,9 +38,10 @@ public class UserController {
     @PostMapping(value = "/register-user", produces = { "application/json" })
     public ResponseEntity<?> register(@RequestBody User user) {
         Map<String, Object> rtn = new HashMap<>();
-        if (userService.isExists(user.getUsername()))
-            new Exception("Username already tacken!");
-
+        if (userService.isExists(user.getUsername())) {
+            rtn.put("error", "Already taken !");
+            return new ResponseEntity<>(rtn, HttpStatus.BAD_REQUEST);
+        }
         rtn.put("data", userService.save(user));
         rtn.put("success", "Registered as successfully!");
         return new ResponseEntity<>(rtn, HttpStatus.CREATED);

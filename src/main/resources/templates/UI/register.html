@@ -20,20 +20,6 @@
       rel="stylesheet"
     />
 
-    <link
-      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
-      rel="stylesheet"
-    />
-
     <!-- Custom styles for this template -->
     <link href="dist/css/custom.css" rel="stylesheet" />
     <!-- Datepicker  -->
@@ -45,70 +31,42 @@
   </head>
   <body>
     <div class="container col-lg-6">
+      <br />
+      <br />
+      <br />
       <h4>Registration Form</h4>
+      <br />
       <div class="row">
-        <div class="col-lg-12">
-          Nane:
-          <input
-            type="text"
-            id="title"
-            placeholder="Task name"
-            class="form-control"
-          />
-        </div>
-
         <div class="col-lg-6">
           Fist Name
-          <input type="text" id="ff" class="form-control" />
+          <input type="text" id="firstName" class="form-control" />
         </div>
         <div class="col-lg-6">
           Last Name
-          <input type="text" id="endDate" class="form-control" />
+          <input type="text" id="lastName" class="form-control" />
         </div>
 
         <div class="col-lg-12">
-          <h4>Gender</h4>
-          <select class="gender form-control">
+          <br /><br />
+          <select id="gender" class="gender form-control">
             <option value="1">Male</option>
             <option value="2">Female</option>
           </select>
+          <br />
         </div>
 
         <div class="col-lg-6">
           Username
-          <input type="text" id="ff" class="form-control" />
+          <input type="text" id="username" class="form-control" />
         </div>
         <div class="col-lg-6">
           password
-          <input type="text" id="endDate" class="form-control" />
+          <input type="text" id="password" class="form-control" />
         </div>
-
-        <div class="col-lg-12">
-          <h4>Description</h4>
-          <h6 id="descriptiont">d</h6>
-          <textarea
-            placeholder="Add more detail to this task"
-            class="form-control"
-            id="description"
-            cols="4"
-            rows="3"
-          ></textarea>
-        </div>
-        <br />
-        <div class="col-lg-">
-          <h4>Priority</h4>
-          <span class="low">
-            <input type="radio" id="priority1" name="priority" value="30" />
-            <label for="priority1">Low</label>
-          </span>
-          <span class="normal">
-            <input type="radio" id="priority2" name="priority" value="60" />
-            <label for="priority2">Normal</label>
-          </span>
-          <span class="high">
-            <input type="radio" id="priority3" name="priority" value="100" />
-            <label for="priority3">High</label>
-          </span>
+        <div class="col-lg-6">
+          <br />
+          <br />
+          <button class="btn btn-primary register">Register</button>
         </div>
       </div>
     </div>
@@ -132,11 +90,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"
-      defer
-    ></script>
     <!-- Date Picker  -->
     <script src="dist/js/jquery.min.js"></script>
     <script src="dist/js/google-date-ui.js"></script>
@@ -145,5 +98,53 @@
     <script src="dist/js/jquery.dataTables.min.js"></script>
     <!-- <script src="dist/js/dataTables.jqueryui.min.js"></script> -->
     <script src="dist/js/custom.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        const success = (message) => {
+          swal("Success !", message, "success");
+        };
+
+        const error = (message) => {
+          swal("Ooops !", message, "error");
+        };
+
+        const warning = (message) => {
+          swal("Ooops !", message, "warning");
+        };
+
+        let $host_name = "http://localhost:8080";
+        const registerTask = () => {
+          let user = {
+            username: $("#username").val(),
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            gender: $("#gender").val(),
+            password: $("#password").val(),
+          };
+
+          $.ajax({
+            type: "POST",
+            url: $host_name + "/register-user",
+            dataType: "json",
+            headers: { "Content-Type": "application/json", charset: "utf-8" },
+            data: JSON.stringify(user),
+            success: function (data) {
+              success("You have successfully registered !");
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+              if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+                warning("The server is down !");
+              else warning("Username is already taken !");
+              // else warning(JSON.parse(xmlHttpRequest.responseText).message);
+            },
+          });
+        };
+
+        $(".register").click(function () {
+          registerTask();
+        });
+      });
+    </script>
   </body>
 </html>
