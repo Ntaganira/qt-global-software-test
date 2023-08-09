@@ -97,12 +97,21 @@
     <script src="dist/js/sweetalert.mini.js"></script>
     <script src="dist/js/jquery.dataTables.min.js"></script>
     <!-- <script src="dist/js/dataTables.jqueryui.min.js"></script> -->
-    <script src="dist/js/custom.js"></script>
+    <!-- <script src="dist/js/custom.js"></script> -->
 
     <script>
       $(document).ready(function () {
         const success = (message) => {
-          swal("Success !", message, "success");
+          swal(
+            {
+              title: "Good job",
+              text: message,
+              type: "success",
+            },
+            function () {
+              window.location.replace($host_name + "/login");
+            }
+          );
         };
 
         const error = (message) => {
