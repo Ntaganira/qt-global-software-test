@@ -130,7 +130,9 @@ $(document).ready(function () {
         description: description,
         priority1:priority1,
         priority2:priority2,
-        priority3: priority3
+        priority3: priority3,
+        assignees:assignees,
+        projects:projects
       };
       registerTask(task);
       
