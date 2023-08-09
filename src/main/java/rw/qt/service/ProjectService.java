@@ -26,4 +26,8 @@ public class ProjectService {
         return repo.existsById(id);
     }
 
+    public Project save(Project p) {
+        return repo.save(p);
+    }
+
 }

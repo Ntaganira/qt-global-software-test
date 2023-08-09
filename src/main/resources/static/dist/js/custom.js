@@ -98,7 +98,16 @@ $(document).ready(function () {
       headers: { "Content-Type": "application/json", charset: "utf-8" },
       data: JSON.stringify(task),
       success: function (data) {
-        success(data.data);
+        swal(
+          {
+            title: "Success !",
+            text: "Task created !",
+            type: "success",
+          },
+          function () {
+            window.location.reload();
+          }
+        );
       },
       error: function (xmlHttpRequest, textStatus, errorThrown) {
         if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
@@ -116,26 +125,28 @@ $(document).ready(function () {
     $("#descriptiont").text($(this).val().length);
   });
 
+  let prior;
+
+  $("#priority1").click(function () {
+    prior = $(this).val();
+  });
+  $("#priority2").click(function () {
+    prior = $(this).val();
+  });
+  $("#priority3").click(function () {
+    prior = $(this).val();
+  });
+
   $(".submit").on("click", function (e) {
     e.preventDefault();
     let title = $("#title").val();
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
     let description = $("#description").val();
-    let priority1 = $("#priority1").val();
-    let priority2 = $("#priority2").val();
-    let priority3 = $("#priority3").val();
     let assignees = [];
     assignees = $(".assignee").val();
     let projects = [];
     projects = $(".project").val();
-
-    let prior;
-    if (priority1 > 0) prior = priority1;
-
-    if (priority2 > 0) prior = priority2;
-
-    if (priority3 > 0) prior = priority3;
 
     let task = {
       title: title,
@@ -146,7 +157,11 @@ $(document).ready(function () {
       assignees: assignees,
       projects: projects,
     };
-    registerTask(task);
+    if (title.length > 0) {
+      registerTask(task);
+    } else {
+      warning("Title is required !");
+    }
   });
 
   $(function () {
@@ -159,5 +174,102 @@ $(document).ready(function () {
     $("#endDate").datepicker({
       dateFormat: "yy-mm-dd",
     });
+  });
+
+  // View all projects
+  const getProjects = () => {
+    $.ajax({
+      type: "GET",
+      url: $host_name + "/all-projects",
+      headers: { "Content-Type": "application/json" },
+      dataType: "json",
+      success: function (data) {
+        let project = $(".project");
+        project.empty();
+        for (var i = 0; i < data.length; i++) {
+          project.append(
+            "<option value=" + data[i].id + ">" + data[i].name + "</option>"
+          );
+        }
+        project.change();
+      },
+      error: function (xmlHttpRequest, textStatus, errorThrown) {
+        if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0) {
+          warning("The server is down !");
+          return;
+        } else {
+          error(textStatus);
+          return;
+        }
+      },
+    });
+  };
+
+  const getUsers = () => {
+    $.ajax({
+      type: "GET",
+      url: $host_name + "/all-users",
+      headers: { "Content-Type": "application/json" },
+      dataType: "json",
+      success: function (data) {
+        let assignee = $(".assignee");
+        assignee.empty();
+        for (var i = 0; i < data.length; i++) {
+          assignee.append(
+            "<option  value=" +
+              data[i].id +
+              ">" +
+              data[i].firstName +
+              " " +
+              data[i].lastName +
+              "</option>"
+          );
+        }
+        assignee.change();
+      },
+      error: function (xmlHttpRequest, textStatus, errorThrown) {
+        if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0) {
+          warning("The server is down !");
+          return;
+        } else {
+          error(textStatus);
+          return;
+        }
+      },
+    });
+  };
+
+  getProjects();
+  getUsers();
+
+  const registerProject = () => {
+    let project = {
+      name: $("#pName").val(),
+    };
+    $.ajax({
+      type: "POST",
+      url: $host_name + "/create-project",
+      dataType: "json",
+      headers: { "Content-Type": "application/json", charset: "utf-8" },
+      data: JSON.stringify(project),
+      success: function (data) {
+        swal({
+          title: "Success !",
+          text: "Project created as successfully!",
+          type: "success",
+        });
+        getProjects();
+      },
+      error: function (xmlHttpRequest, textStatus, errorThrown) {
+        if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+          warning("The server is down !");
+        else warning(JSON.parse(xmlHttpRequest.responseText).message);
+      },
+    });
+  };
+
+  $(".saveProject").click(function (e) {
+    e.preventDefault();
+    registerProject();
   });
 });

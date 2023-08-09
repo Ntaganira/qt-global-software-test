@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import rw.qt.dto.TaskDTO;
+import rw.qt.entity.Project;
 import rw.qt.entity.Tasks;
 import rw.qt.entity.User;
 import rw.qt.service.ProjectService;
@@ -63,6 +64,16 @@ public class TaskController {
         Map<String, Object> rtn = new HashMap<>();
         try {
             rtn.put("data", taskService.save(task));
+        } catch (Exception e) {
+        }
+        return new ResponseEntity<>(rtn, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create-project")
+    public ResponseEntity<?> newProject(@RequestBody Project project) {
+        Map<String, Object> rtn = new HashMap<>();
+        try {
+            rtn.put("data", projectService.save(project));
         } catch (Exception e) {
         }
         return new ResponseEntity<>(rtn, HttpStatus.OK);

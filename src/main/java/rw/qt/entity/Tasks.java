@@ -3,10 +3,12 @@ package rw.qt.entity;
 import java.sql.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,4 +36,7 @@ public class Tasks {
     private String description;
     private List<Long> assignees;
     private List<Long> projects;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String attachment;
 }

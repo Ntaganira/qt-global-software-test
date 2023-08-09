@@ -63,6 +63,9 @@ public class TaskServiceImpl implements TaskService {
                     .startDate(task.getStartDate())
                     .title(task.getTitle())
                     .description(task.getDescription())
+                    .priority(task.getPriority())
+                    .attachment(task.getAttachment())
+
                     .build();
 
         } catch (Exception e) {
