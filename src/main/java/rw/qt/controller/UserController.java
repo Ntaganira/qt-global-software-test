@@ -47,4 +47,23 @@ public class UserController {
         return new ResponseEntity<>(rtn, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/update-user", produces = { "application/json" })
+    public ResponseEntity<?> updateUserProfile(@RequestBody User user) {
+        Map<String, Object> rtn = new HashMap<>();
+        try {
+            User user1 = userService.findById(user.getId());
+            user1.setFirstName(user.getFirstName());
+            user1.setLastName(user.getLastName());
+            user1.setGender(user.getGender());
+            user1.setPassword(user.getPassword());
+            System.out.println(user1.getPassword());
+            rtn.put("data", userService.save(user1));
+            rtn.put("success", "Your profile is updated as successfully!");
+            return new ResponseEntity<>(rtn, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(rtn, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

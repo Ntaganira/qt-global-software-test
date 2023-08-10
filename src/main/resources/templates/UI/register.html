@@ -159,6 +159,7 @@
           <br />
           <br />
           <button class="btn btn-primary register">Register</button>
+          <button class="btn btn-warning update">Update</button>
         </div>
       </div>
     </div>
@@ -215,7 +216,7 @@
         };
 
         let $host_name = "http://localhost:8080";
-        const registerTask = () => {
+        const registerUser = () => {
           let user = {
             username: $("#username").val(),
             firstName: $("#firstName").val(),
@@ -243,8 +244,50 @@
           });
         };
 
+        const updateUser = () => {
+          let user = {
+            id: localStorage.getItem("user-id"),
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            gender: $("#gender").val(),
+            password: $("#password2").val(),
+            photo: $("#profilePictureInput").val(),
+          };
+
+          if (
+            $("#password2").val().length > 0 &&
+            $("#password2").val() == $("#password1").val()
+          ) {
+            $.ajax({
+              type: "POST",
+              url: $host_name + "/update-user",
+              dataType: "json",
+              headers: { "Content-Type": "application/json", charset: "utf-8" },
+              data: JSON.stringify(user),
+              success: function (data) {
+                success("Your profile successfully updated !");
+              },
+              error: function (xmlHttpRequest, textStatus, errorThrown) {
+                if (
+                  xmlHttpRequest.readyState == 0 ||
+                  xmlHttpRequest.status == 0
+                )
+                  warning("The server is down !");
+                else warning("Can update you profile !");
+                // else warning(JSON.parse(xmlHttpRequest.responseText).message);
+              },
+            });
+          } else {
+            warning("the password does not match !");
+          }
+        };
+
         $(".register").click(function () {
-          registerTask();
+          registerUser();
+        });
+
+        $(".update").click(function () {
+          updateUser();
         });
 
         // image
@@ -280,7 +323,7 @@
         });
         //  End Image
 
-        let user = localStorage.getItem("user-profile");
+        let user = localStorage.getItem("user-id");
         if (user != null) {
           $("#username").val(localStorage.getItem("user-username"));
           $("#firstName").val(localStorage.getItem("user-firstName"));
