@@ -16,6 +16,11 @@
     />
 
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
       href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
       rel="stylesheet"
     />
@@ -37,6 +42,31 @@
       <h4>Registration Form</h4>
       <br />
       <div class="row">
+        <div class="col-lg-12">
+          <div class="profile-pic more2">
+            <input type="hidden" id="page-id" value="is-new-record" />
+            <input type="hidden" id="profilePictureInput" />
+            <!-- <input type="hidden" id="signatureNidInput" > -->
+            <div class="avatar-upload" id="imageUploadArea">
+              <div class="avatar-edit">
+                <input
+                  type="file"
+                  id="imageUpload"
+                  accept=".png, .jpg, .jpeg"
+                />
+                <label for="imageUpload" id=""
+                  ><i class="profile-icon fa fa-upload"></i
+                ></label>
+              </div>
+              <div class="avatar-preview">
+                <div
+                  id="imagePreview"
+                  style="background-image: src('/images/profile.png')"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-lg-6">
           Fist Name
           <input type="text" id="firstName" class="form-control" />
@@ -63,6 +93,7 @@
           password
           <input type="text" id="password" class="form-control" />
         </div>
+
         <div class="col-lg-6">
           <br />
           <br />
@@ -130,6 +161,7 @@
             lastName: $("#lastName").val(),
             gender: $("#gender").val(),
             password: $("#password").val(),
+            photo: $("#profilePictureInput").val(),
           };
 
           $.ajax({
@@ -153,6 +185,39 @@
         $(".register").click(function () {
           registerTask();
         });
+
+        // image
+        $(document).ready(function () {
+          let currentImage = $("#profilePictureInput").val();
+          let uri = currentImage != null ? currentImage : "";
+          $("#imagePreview").css("background-image", "url(" + uri + ")");
+        });
+
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            $("#profilePictureInput").empty();
+            reader.onload = function (e) {
+              var profilePicLength = e.target.result;
+              const profilePic = profilePicLength.split("base64,").pop();
+              $("#imagePreview").css(
+                "background-image",
+                "url(" + e.target.result + ")"
+              );
+              $("#imagePreview").hide();
+              $("#imagePreview").fadeIn(650);
+              $("#profilePictureInput").val(
+                `data:image/png;base64,${profilePic}`
+              );
+            };
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+
+        $("#imageUpload").change(function () {
+          readURL(this);
+        });
+        //  End Image
       });
     </script>
   </body>

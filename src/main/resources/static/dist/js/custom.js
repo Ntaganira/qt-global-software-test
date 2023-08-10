@@ -1,36 +1,6 @@
 $(document).ready(function () {
   let $host_name = "http://localhost:8080";
 
-  // image
-  $(document).ready(function () {
-    let currentImage = $("#profilePictureInput").val();
-    let uri = currentImage != null ? currentImage : "";
-    $("#imagePreview").css("background-image", "url(" + uri + ")");
-  });
-
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      $("#profilePictureInput").empty();
-      reader.onload = function (e) {
-        var profilePicLength = e.target.result;
-        const profilePic = profilePicLength.split("base64,").pop();
-        $("#imagePreview").css(
-          "background-image",
-          "url(" + e.target.result + ")"
-        );
-        $("#imagePreview").hide();
-        $("#imagePreview").fadeIn(650);
-        $("#profilePictureInput").val(`data:image/png;base64,${profilePic}`);
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  $("#imageUpload").change(function () {
-    readURL(this);
-  });
-  //  End Image
   const success = (message) => {
     swal("Success !", message, "success");
   };
@@ -54,6 +24,7 @@ $(document).ready(function () {
           "user-name",
           data.user.firstName + " " + data.user.lastName
         );
+        localStorage.setItem("user-photo", data.user.photo);
         datafunc(data.data);
       },
       error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -68,6 +39,8 @@ $(document).ready(function () {
     });
     let usernames = localStorage.getItem("user-name");
     $(".user-u").text(usernames);
+    let photo = localStorage.getItem("user-photo");
+    $(".user-photo").attr("src", photo);
   };
 
   const datafunc = (data) => {
@@ -143,6 +116,7 @@ $(document).ready(function () {
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
     let description = $("#description").val();
+    let attachment = $("#attachment-input").val();
     let assignees = [];
     assignees = $(".assignee").val();
     let projects = [];
@@ -156,6 +130,7 @@ $(document).ready(function () {
       priority: prior,
       assignees: assignees,
       projects: projects,
+      attachment: attachment,
     };
     if (title.length > 0) {
       registerTask(task);
@@ -268,8 +243,35 @@ $(document).ready(function () {
     });
   };
 
+  function attachmentUpload(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      $("#attachment-input").empty();
+      reader.onload = function (e) {
+        var profilePicLength = e.target.result;
+        const profilePic = profilePicLength.split("base64,").pop();
+        $("#attachment-input").val(profilePic);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imageUpload").change(function () {
+    attachmentUpload(this);
+  });
+
   $(".saveProject").click(function (e) {
     e.preventDefault();
     registerProject();
   });
 });
+
+// file download
+function downloadPDF(pdf, filename) {
+  const linkSource = `data:application/pdf;base64,${pdf}`;
+  const downloadLink = document.createElement("a");
+  const fileName = `${filename}`;
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+}

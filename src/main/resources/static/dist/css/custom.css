@@ -18,22 +18,20 @@
   height: 34px;
   margin-bottom: 0;
   border-radius: 50%;
-  background: #014fa4eb;
   border: 1px solid transparent;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   font-weight: normal;
   transition: all 0.2s ease-in-out;
   position: relative;
-  top: 145px;
-  left: 30px;
-  border: solid 1px #ddb301;
+  top: 110px;
+  left: -20px;
 }
 .avatar-upload .avatar-edit input + label:hover {
   background: #f1f1f1;
   border-color: #d6d6d6;
 }
-.avatar-upload .avatar-edit input + label:after {
+.avatar-upload .avatar-edit input {
   content: "\f040";
   font-family: "FontAwesome";
   color: #757575;
@@ -45,8 +43,8 @@
   margin: auto;
 }
 .avatar-upload .avatar-preview {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   position: relative;
   border-radius: 50%;
   border: 6px solid #f8f8f8;
@@ -61,9 +59,8 @@
   background-position: center;
 }
 
-.avatar-upload .avatar-edit input + label:hover {
-  background: #f7a103;
-  border-color: #d6d6d6;
+.profile-icon{
+  position: relative;
+    left: 9px;
 }
-
 /* end image  */

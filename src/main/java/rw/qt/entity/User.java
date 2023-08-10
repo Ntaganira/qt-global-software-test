@@ -24,4 +24,7 @@ public class User {
     private String gender;
     private String password;
     private List<Long> tasks;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String photo;
 }
