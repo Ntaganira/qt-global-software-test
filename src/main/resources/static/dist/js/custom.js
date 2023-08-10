@@ -33,6 +33,35 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         localStorage.setItem(
+          "user-id", data.user.id
+        );
+
+        localStorage.setItem(
+          "user-firstName", data.user.firstName
+        );
+
+        localStorage.setItem(
+          "user-photo", data.user.photo
+        );
+
+        localStorage.setItem(
+          "user-lastName", data.user.lastName
+        );
+
+        localStorage.setItem(
+          "user-gender", data.user.gender
+        );
+
+        localStorage.setItem(
+          "user-username", data.user.username
+        );
+
+        localStorage.setItem(
+          "user-password", data.user.password
+        );
+
+
+        localStorage.setItem(
           "user-name",
           data.user.firstName + " " + data.user.lastName
         );
@@ -71,7 +100,7 @@ $(document).ready(function () {
         { data: "priority" },
         { data: "status" ,
         render: function (data, type,row) {
-          if(data != null)return '<span class="btn btn-sm btn-warning">'+data+'</span>'
+          if(data != null || data == 'DRAFT')return '<span class="btn btn-sm btn-warning">'+data+'</span>'
           else return '<span class="btn btn-sm btn-info">Inprogress</span>'},
       },
         {
@@ -184,6 +213,7 @@ $(document).ready(function () {
       assignees: assignees,
       projects: projects,
       attachment: attachment,
+      status:"progress",
     };
     if (title.length > 0) {
       registerTask(task);
