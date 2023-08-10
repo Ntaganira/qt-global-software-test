@@ -37,6 +37,6 @@ public class Tasks {
     private List<Long> assignees;
     private List<Long> projects;
     @Lob
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String attachment;
 }

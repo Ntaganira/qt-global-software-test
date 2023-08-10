@@ -57,6 +57,7 @@ $(document).ready(function () {
         { data: "projects" },
         { data: "description" },
         { data: "priority" },
+        { data: "priority" },
       ],
     });
   };
@@ -234,6 +235,7 @@ $(document).ready(function () {
           type: "success",
         });
         getProjects();
+        $("#pName").val("");
       },
       error: function (xmlHttpRequest, textStatus, errorThrown) {
         if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)

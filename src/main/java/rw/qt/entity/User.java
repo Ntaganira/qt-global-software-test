@@ -25,6 +25,6 @@ public class User {
     private String password;
     private List<Long> tasks;
     @Lob
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String photo;
 }

@@ -61,6 +61,12 @@
       type="text/css"
       href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css"
     />
+
+    <style>
+      .select2-container--default .select2-selection--multiple {
+        border: 0 !important;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -381,7 +387,7 @@
     <script src="dist/js/custom.js"></script>
     <script>
       $(document).ready(function () {
-        $(".assignee").select2({ width: "100%" });
+        $(".assignee").select2({});
         $(".project").select2({ width: "100%" });
         $("#table").DataTable({
           buttons: ["copy", "csv", "excel", "pdf", "print"],
