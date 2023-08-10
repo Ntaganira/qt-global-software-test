@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -64,6 +65,16 @@ public class TaskController {
         Map<String, Object> rtn = new HashMap<>();
         try {
             rtn.put("data", taskService.save(task));
+        } catch (Exception e) {
+        }
+        return new ResponseEntity<>(rtn, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/update-task/{id}")
+    public ResponseEntity<?> Update(@PathVariable("id") long id) {
+        Map<String, Object> rtn = new HashMap<>();
+        try {
+            rtn.put("data", taskService.findById(id));
         } catch (Exception e) {
         }
         return new ResponseEntity<>(rtn, HttpStatus.OK);

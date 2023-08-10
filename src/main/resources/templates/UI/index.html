@@ -66,10 +66,96 @@
       .select2-container--default .select2-selection--multiple {
         border: 0 !important;
       }
+
+      .navbar-light {
+        background: #0063cf;
+        color: white;
+        box-shadow: 0 2px 7px #0000004f !important;
+      }
+
+      .navbar-light .navbar-brand:focus,
+      .navbar-light .navbar-brand:hover {
+        color: white !important;
+      }
+
+      .navbar-brand {
+        color: white !important;
+      }
+
+      .avatar-upload .avatar-preview {
+        width: 0;
+        height: 80px;
+        position: relative;
+        border-radius: 0;
+        border: 0;
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .avatar-upload .avatar-edit input + label {
+        display: inline-block;
+        width: 157px;
+        height: 0;
+        margin-bottom: 0;
+        border-radius: 0;
+        border: 0;
+        box-shadow: 0px rgba(255, 255, 255, 0);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        top: 110px;
+        left: -20px;
+      }
+
+      .low {
+        background: #caf4c0;
+        padding: 10px;
+        margin-right: 30px;
+      }
+
+      .normal {
+        background: #c0d1f4;
+        padding: 10px;
+        margin-right: 30px;
+      }
+
+      .high {
+        background: #f4c0c0;
+        padding: 10px;
+        margin-right: 30px;
+      }
+      .select2-search .select2-search--inline {
+        background: #ccc !important;
+      }
+      .select2-container--default
+        .select2-selection--multiple
+        .select2-selection__choice {
+        background-color: #e4e4e400;
+        border: 0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: inline-block;
+        margin-left: 5px;
+        margin-top: 5px;
+        padding: 0px;
+        padding-left: 20px;
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: revert;
+        vertical-align: bottom;
+        white-space: nowrap;
+      }
+
+      .assignee-span {
+        position: relative;
+        bottom: 50px;
+        left: 235px;
+      }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#">Tasks Managment</a>
       <button
         class="navbar-toggler"
@@ -141,6 +227,8 @@
                 <th>Projects</th>
                 <th>Description</th>
                 <th>Priority</th>
+                <th>Status</th>
+                <th></th>
               </tr>
             </thead>
           </table>
@@ -161,6 +249,9 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="longid">Create task</h5>
+            <button type="button" class="save-as-draft btn">
+              <i class="fa fa-plus"></i> Save Draft
+            </button>
             <button
               type="button"
               class="close"
@@ -192,32 +283,47 @@
               </div>
 
               <div class="col-lg-12">
-                <h4>Assignee</h4>
-                <select
-                  class="assignee form-control"
-                  name="assignees[]"
-                  multiple="multiple"
-                >
-                  <option value="1">Assignee 1</option>
-                  <option value="2">Assignee 2</option>
-                  <option value="3">Assignee 3</option>
-                  <option value="4">Assignee 4</option>
-                </select>
+                <br />
+                <span
+                  ><h5>Assignee <i class="fa fa-plus"> </i></h5
+                ></span>
+                <div class="input-group form-control mb-3">
+                  <select
+                    class="assignee form-control"
+                    name="assignees[]"
+                    multiple="multiple"
+                  ></select>
+                </div>
               </div>
 
               <div class="col-lg-12">
-                <h4>Projects</h4>
-                <select
-                  aria-placeholder="Project Name"
-                  class="project form-control"
-                  name="projects[]"
-                  multiple="multiple"
-                >
-                  <option value="1">Project 1</option>
-                  <option value="2">Project 2</option>
-                  <option value="3">Project 3</option>
-                  <option value="4">Project 4</option>
-                </select>
+                <h5>Projects</h5>
+                <div class="input-group mb-3">
+                  <div
+                    type="text"
+                    class="form-control"
+                    placeholder="Recipient's username"
+                    aria-label="Recipient's username"
+                    aria-describedby="basic-addon2"
+                  >
+                    <select
+                      aria-placeholder="Project Name"
+                      class="project form-control"
+                      name="projects[]"
+                      multiple="multiple"
+                    >
+                      <option value="1">Project 1</option>
+                      <option value="2">Project 2</option>
+                      <option value="3">Project 3</option>
+                      <option value="4">Project 4</option>
+                    </select>
+                  </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"
+                      ><i class="fa fa-plus"></i> Add Projects</span
+                    >
+                  </div>
+                </div>
               </div>
               <div class="col-lg-12">
                 <h4>Description</h4>
@@ -229,10 +335,15 @@
                   cols="4"
                   rows="3"
                 ></textarea>
-                <span id="descriptiont">0</span> / <span> 150</span>
+                <center>
+                  <div>
+                    <span id="descriptiont">0</span> / <span> 150</span>
+                  </div>
+                </center>
               </div>
               <br />
               <div class="col-lg-12">
+                <br />
                 <h4>Priority</h4>
                 <span class="low">
                   <input
@@ -270,8 +381,18 @@
                     <div class="avatar-edit">
                       <input type="file" id="imageUpload" accept=".pdf" />
                       <label for="imageUpload" id=""
-                        ><i class="profile-icon fa fa-upload"></i
-                      ></label>
+                        ><span
+                          ><i
+                            class="profile-icon fa fa-paperclip"
+                            style="
+                              font-size: 25px;
+                              -webkit-transform: rotate(45deg);
+                              -moz-transform: rotate(45deg);
+                            "
+                          ></i
+                        ></span>
+                        <span style="margin-left: 15px"> Attach</span></label
+                      >
                     </div>
                     <div class="avatar-preview">
                       <div id="imagePreview"></div>
@@ -282,7 +403,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <input type="file" id="attachment" />
+            <!-- <input type="file" id="attachment" /> -->
             <button
               type="button"
               class="btn btn-secondary"
@@ -387,7 +508,7 @@
     <script src="dist/js/custom.js"></script>
     <script>
       $(document).ready(function () {
-        $(".assignee").select2({});
+        $(".assignee").select2({ width: "30%" });
         $(".project").select2({ width: "100%" });
         $("#table").DataTable({
           buttons: ["copy", "csv", "excel", "pdf", "print"],
@@ -497,6 +618,11 @@
               fileName: "PrepBootstrapExcel",
             });
           });
+        });
+        $("#basic-addon2").click(function () {
+          let all = $(".select2-selection");
+          all.trigger("click");
+          return false;
         });
       });
     </script>

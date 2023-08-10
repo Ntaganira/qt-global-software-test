@@ -1,6 +1,18 @@
-$(document).ready(function () {
-  let $host_name = "http://localhost:8080";
+let $host_name = "http://localhost:8080";
 
+const success = (message) => {
+  swal("Success !", message, "success");
+};
+
+const error = (message) => {
+  swal("Ooops !", message, "error");
+};
+
+const warning = (message) => {
+  swal("Ooops !", message, "warning");
+};
+
+$(document).ready(function () {
   const success = (message) => {
     swal("Success !", message, "success");
   };
@@ -57,7 +69,20 @@ $(document).ready(function () {
         { data: "projects" },
         { data: "description" },
         { data: "priority" },
-        { data: "priority" },
+        { data: "status" ,
+        render: function (data, type,row) {
+          if(data != null)return '<span class="btn btn-sm btn-warning">'+data+'</span>'
+          else return '<span class="btn btn-sm btn-info">Inprogress</span>'},
+      },
+        {
+                data: "attachment",
+                render: function (data, type,row) {
+                  let id =  row.id;
+                  let file =  data;
+                    if (data.length>10) return '<span><a onClick="downloadPDF('+"'"+file+"'"+')" class="btn btn-link"><i class="fa fa-download"></i></a></span><span><a onClick="updateTask('+"'"+id+"'"+')"  data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-link"><i class="fa fa-pencil"></i></a></span>';
+                    else return '</span><span><a onClick="updateTask('+"'"+id+"'"+')"  data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-link"><i class="fa fa-pencil"></i></a></span>';
+                },
+            },
       ],
     });
   };
@@ -91,10 +116,37 @@ $(document).ready(function () {
     });
   };
 
+  const saveAsDataft = (task) => {
+    $.ajax({
+      type: "POST",
+      url: $host_name + "/create-task",
+      dataType: "json",
+      headers: { "Content-Type": "application/json", charset: "utf-8" },
+      data: JSON.stringify(task),
+      success: function (data) {
+        swal(
+          {
+            title: "Success !",
+            text: "Task Saved as Draft !",
+            type: "warning",
+          },
+          function () {
+            window.location.reload();
+          }
+        );
+      },
+      error: function (xmlHttpRequest, textStatus, errorThrown) {
+        if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+          warning("The server is down !");
+        else warning(JSON.parse(xmlHttpRequest.responseText).message);
+      },
+    });
+  };
+
   $("#description").keyup(function (e) {
     if ($(this).val().length > 99) $(this).css("background-color", "#FFE4C4");
 
-    if ($(this).val().length <= 99) $(this).css("background-color", "#54C571");
+    if ($(this).val().length <= 99) $(this).css("background-color", "#caf4c0");
 
     $("#descriptiont").text($(this).val().length);
   });
@@ -135,6 +187,37 @@ $(document).ready(function () {
     };
     if (title.length > 0) {
       registerTask(task);
+    } else {
+      warning("Title is required !");
+    }
+  });
+
+
+  $(".save-as-draft").on("click", function (e) {
+    e.preventDefault();
+    let title = $("#title").val();
+    let startDate = $("#startDate").val();
+    let endDate = $("#endDate").val();
+    let description = $("#description").val();
+    let attachment = $("#attachment-input").val();
+    let assignees = [];
+    assignees = $(".assignee").val();
+    let projects = [];
+    projects = $(".project").val();
+
+    let task = {
+      title: title,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+      priority: prior,
+      assignees: assignees,
+      projects: projects,
+      attachment: attachment,
+      status:"DRAFT",
+    };
+    if (title.length > 0) {
+      saveAsDataft(task);
     } else {
       warning("Title is required !");
     }
@@ -264,15 +347,50 @@ $(document).ready(function () {
 
   $(".saveProject").click(function (e) {
     e.preventDefault();
-    registerProject();
+    if($("#pName").val().length>0){
+      registerProject();
+    }else{
+      warning("Please add project name");
+    }
   });
 });
 
+
+const updateTask = (id) => {
+  $.ajax({
+    type: "GET",
+    url: $host_name + "/update-task/"+id,
+    dataType: "json",
+    headers: { "Content-Type": "application/json", charset: "utf-8" },
+    success: function (data) {
+      let task = data.data;
+      if(task != null){
+        $("#title").val(task.title);
+        $("#startDate").val(task.startDate);
+        $("#endDate").val(task.endDate);
+       $("#description").val(task.description);
+      $("#attachment-input").val(task.attachment);
+        // let assignees = [];
+        // assignees = $(".assignee").val();
+        // let projects = [];
+        // projects = $(".project").val();
+      }
+      
+    },
+    error: function (xmlHttpRequest, textStatus, errorThrown) {
+      if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+        warning("The server is down !");
+      else warning(JSON.parse(xmlHttpRequest.responseText).message);
+    },
+  });
+};
+
+
 // file download
-function downloadPDF(pdf, filename) {
+function downloadPDF(pdf) {
   const linkSource = `data:application/pdf;base64,${pdf}`;
   const downloadLink = document.createElement("a");
-  const fileName = `${filename}`;
+  const fileName = "qt-file-downloaded";
   downloadLink.href = linkSource;
   downloadLink.download = fileName;
   downloadLink.click();

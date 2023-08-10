@@ -74,4 +74,9 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    @Override
+    public Tasks findById(long id) {
+        return repos.findById(id).get();
+    }
+
 }
