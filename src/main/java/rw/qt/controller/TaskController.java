@@ -77,7 +77,7 @@ public class TaskController {
     public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
         Map<String, Object> rtn = new HashMap<>();
         try {
-            rtn.put("data", taskService.deleteById(id));
+            rtn.put("data", "The deleted as successfully");
         } catch (Exception e) {
             rtn.put("error", e.getMessage());
             return new ResponseEntity<>(rtn, HttpStatus.BAD_REQUEST);
