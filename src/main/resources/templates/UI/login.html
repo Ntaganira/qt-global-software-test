@@ -28,8 +28,39 @@
     <link href="dist/css/dataTables.jqueryui.min.css" rel="stylesheet" />
     <link href="dist/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="dist/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <style>
+      .navbar-light {
+        background: #0063cf;
+        color: white;
+        box-shadow: 0 2px 7px #0000004f !important;
+      }
+
+      .navbar-light .navbar-brand:focus,
+      .navbar-light .navbar-brand:hover {
+        color: white !important;
+      }
+
+      .navbar-brand {
+        color: white !important;
+      }
+    </style>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/index">Tasks Managment</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav"></div>
+    </nav>
     <div class="container col-lg-6">
       <br />
       <br />
@@ -109,9 +140,13 @@
         if (pathname.includes("login?error=true"))
           warning("Invalid username or password !");
 
-        if (pathname.includes("/login?logout"))
+        if (pathname.includes("/login?logout")) {
+          success("Have successfully logged out !");
+        }
+
+        if (pathname.endsWith("/login")) {
           localStorage.removeItem("user-id");
-        success("Have successfully logged out !");
+        }
       });
     </script>
   </body>

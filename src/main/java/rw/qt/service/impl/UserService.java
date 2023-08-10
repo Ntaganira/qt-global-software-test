@@ -11,6 +11,8 @@ public interface UserService {
 
     User findById(long id);
 
+    void deleteById(long id);
+
     boolean isExists(String username);
 
     boolean isExistsById(long id);
