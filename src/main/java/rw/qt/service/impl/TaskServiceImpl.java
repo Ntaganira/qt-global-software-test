@@ -1,6 +1,5 @@
 package rw.qt.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,4 +78,8 @@ public class TaskServiceImpl implements TaskService {
         return repos.findById(id).get();
     }
 
+    @Override
+    public void deleteById(long id) {
+        repos.deleteById(id);
+    }
 }

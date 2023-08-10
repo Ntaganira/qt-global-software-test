@@ -30,4 +30,8 @@ public class ProjectService {
         return repo.save(p);
     }
 
+    public List<Project> findByTasks(List<Long> tasks) {
+        return repo.findByTasksIn(tasks);
+    }
+
 }
