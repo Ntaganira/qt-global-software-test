@@ -49,7 +49,7 @@ Before you begin, ensure you have the following tools installed:
 
 
 ## Project Structure
-
+```
  ├── mvnw
  ├── mvnw.cmd
  ├── pom.xml
@@ -76,7 +76,7 @@ Before you begin, ensure you have the following tools installed:
             │	├── login.html
             │	└── register.html
             └── application.properties
-
+```
 ## Usage
 
 1. **User Registration:**
