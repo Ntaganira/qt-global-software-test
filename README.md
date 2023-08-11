@@ -62,9 +62,9 @@ Before you begin, ensure you have the following tools installed:
         │           ├── > controller
         │           ├── > dtos
         │           ├── > entity
-	     │	             ├── Project.java
-	     │		          ├── Tasks.java
-	     │		          └── User.java
+        │	          ├── Project.java
+        │		  ├── Tasks.java
+        │		  └── User.java
         │           ├── >repository
         │           ├── >security
         │           ├── >service
