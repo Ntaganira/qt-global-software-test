@@ -37,11 +37,15 @@ Before you begin, ensure you have the following tools installed:
    mvn spring-boot:run
    ```
 
-   The application will start at `http://localhost:8080`.
+   The application will start at `http://localhost:8080/login`.
 
-6. **Access the Application:**
+3. **Access the Application:**
 
    - Open a web browser and navigate to `http://localhost:8080/register` to access the application.
+
+4. **Access the API documentation:**
+
+   - Once you have logged into the system on the tab under the user profile picture click documentation it will take you to the APIs documentation of this project.
 
 ## Usage
 
