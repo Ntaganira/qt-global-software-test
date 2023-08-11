@@ -47,6 +47,36 @@ Before you begin, ensure you have the following tools installed:
 
    - Once you have logged into the system on the tab under the user profile picture click documentation it will take you to the APIs documentation of this project.
 
+
+## Project Structure
+
+`├── mvnw
+ ├── mvnw.cmd
+ ├── pom.xml
+ └── src
+    └── main
+        ├── java
+        │   └── rw
+        │       └── qt
+        │           ├── > configurations
+        │           ├── > controller
+        │           ├── > dtos
+        │           ├── > entity
+	     │	             ├── Project.java
+	     │		          ├── Tasks.java
+	     │		          └── User.java
+        │           ├── >repository
+        │           ├── >security
+        │           ├── >service
+        │           └── QttaskmanagmentApplication.java
+        └── resources
+            ├── application.properties
+            ├── UI
+            │	├── index.html
+            │	├── login.html
+            │	└── register.html
+            └── application.properties
+`
 ## Usage
 
 1. **User Registration:**
