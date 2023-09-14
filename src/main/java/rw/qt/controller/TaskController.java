@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import rw.qt.dto.TaskDTO;
-import rw.qt.entity.Project;
+import rw.qt.dto.TaskDTOResponse;
 import rw.qt.entity.Tasks;
 import rw.qt.entity.User;
 import rw.qt.service.ProjectService;
@@ -32,9 +31,6 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private ProjectService projectService;
@@ -53,10 +49,36 @@ public class TaskController {
         return new ResponseEntity<>(rtn, HttpStatus.OK);
     }
 
+    @GetMapping("/all-tasks-pagination")
+    public ResponseEntity<?> getFundersProfiles(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        Map<String, Object> rtn = new HashMap<>();
+        User loggedIn = (User) httpSession.getAttribute("user");
+        rtn.put("user", loggedIn);
+        rtn.put("data", taskService.findAll(pageNo, pageSize));
+        return new ResponseEntity<>(rtn, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/create-task")
     public ResponseEntity<?> createTask(@RequestBody Tasks task) {
         Map<String, Object> rtn = new HashMap<>();
         try {
+            if (task != null && task.getId() != 0) {
+                Tasks tasks = taskService.findById(task.getId());
+                tasks
+                        .builder()
+                        .assignees(task.getAssignees())
+                        .attachment(task.getAttachment())
+                        .description(task.getDescription())
+                        .priority(task.getPriority())
+                        .projects(task.getProjects())
+                        .status(task.getStatus())
+                        .endDate(task.getEndDate())
+                        .startDate(task.getStartDate())
+                        .build();
+            }
+
             rtn.put("data", taskService.save(task));
         } catch (Exception e) {
         }

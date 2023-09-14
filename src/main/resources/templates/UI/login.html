@@ -142,8 +142,15 @@
 
         if (pathname.includes("/login?logout")) {
           success("Have successfully logged out !");
+          localStorage.removeItem("user-id");
+          localStorage.removeItem("user-firstName");
+          localStorage.removeItem("user-photo");
+          localStorage.removeItem("user-lastName");
+          localStorage.removeItem("user-gender");
+          localStorage.removeItem("user-username");
+          localStorage.removeItem("user-password");
+          localStorage.removeItem("user-name");
         }
-
         if (pathname.endsWith("/login")) {
           localStorage.removeItem("user-id");
         }

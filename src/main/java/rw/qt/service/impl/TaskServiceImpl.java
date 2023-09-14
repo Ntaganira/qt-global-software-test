@@ -3,10 +3,14 @@ package rw.qt.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import rw.qt.dto.TaskDTO;
+import rw.qt.dto.TaskDTOResponse;
 import rw.qt.entity.Project;
 import rw.qt.entity.Tasks;
 import rw.qt.entity.User;
@@ -29,20 +33,40 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> findAll() {
-        return repos.findAll().stream().map(i -> mapDTO(i)).collect(Collectors.toList());
+        return repos.findAll().stream().map(this::dtoMapper).collect(Collectors.toList());
 
     }
 
-    public TaskDTO mapDTO(Tasks task) {
+    @Override
+    public TaskDTOResponse findAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Tasks> tasksPage = repos.findAll(pageable);
+        List<Tasks> taskList = tasksPage.getContent();
+        List<TaskDTO> content = taskList
+                .stream()
+                .map(this::dtoMapper).collect(Collectors.toList());
+
+        TaskDTOResponse taskResponse = new TaskDTOResponse();
+        taskResponse.setData(content);
+        taskResponse.setPageNo(tasksPage.getNumber());
+        taskResponse.setPageSize(tasksPage.getSize());
+        taskResponse.setTotalElements(tasksPage.getTotalElements());
+        taskResponse.setTotalPages(tasksPage.getTotalPages());
+        taskResponse.setLast(tasksPage.isLast());
+
+        return taskResponse;
+    }
+
+    public TaskDTO dtoMapper(Tasks task) {
         try {
             String assignees = "";
             String projects = "";
-            for (Long l : task.getAssignees()) {
-                if (userService.isExistsById(l)) {
-                    User u = userService.findById(l);
-                    if (u != null)
-                        assignees += " ->" + u.getFirstName();
-                }
+            for (String l : task.getAssignees()) {
+                // if (userService.isExistsById(l)) {
+                // User u = userService.findById(l);
+                // if (u != null)
+                assignees += " ->" + l;
+                // }
             }
             for (Long l : task.getProjects()) {
                 if (projectService.existsById(l)) {

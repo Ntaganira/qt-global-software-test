@@ -39,7 +39,7 @@ public class OpenAPIConfig {
                 .url("https://rw.linkedin.com/in/ntaganira-heritier-a96084123");
 
         Info info = new Info()
-                .title("Task Management API (Qt Software Developpers)")
+                .title("Task Management API (Qt Software Developer Test)")
                 .version("1.0")
                 .contact(contact)
                 .description("This API exposes endpoints for User management and Task Managment.")

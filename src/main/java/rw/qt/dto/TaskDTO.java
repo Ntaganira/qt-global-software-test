@@ -1,6 +1,7 @@
 package rw.qt.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.*;
 
@@ -18,6 +19,8 @@ public class TaskDTO {
     private String description;
     private String assignees;
     private String projects;
+    private List<Long> assigneesId;
+    private List<Long> projectsId;
     private String attachment;
 
 }

@@ -64,17 +64,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <a class="navbar-brand" href="#">
-          <img
-            alt=""
-            width="30"
-            height="24"
-            class="d-inline-block align-text-top user-photo rounded-circle"
-          />
-          <span class="user-u"></span>
-        </a>
-      </div>
+      <div class="collapse navbar-collapse" id="navbarNav"></div>
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/logout"
@@ -164,6 +154,8 @@
           <a href="/login" class="btn btn-link login-d">Login</a>
           <button class="btn btn-warning update">Update</button>
           <a href="/index" class="btn btn-danger login-c">Cancel</a>
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -238,6 +230,7 @@
             data: JSON.stringify(user),
             success: function (data) {
               success("You have successfully registered !");
+              localStorage.setItem("reload", "heritier");
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
               if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)

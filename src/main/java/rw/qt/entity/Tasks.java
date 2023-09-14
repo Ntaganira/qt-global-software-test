@@ -34,7 +34,7 @@ public class Tasks {
     private String status;
     private String priority;
     private String description;
-    private List<Long> assignees;
+    private List<String> assignees;
     private List<Long> projects;
     @Lob
     @Column(columnDefinition = "LONGTEXT")
